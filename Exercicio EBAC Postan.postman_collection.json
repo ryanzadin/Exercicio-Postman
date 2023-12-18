@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "9489d4f0-119c-4748-a538-9357ada08903",
+		"name": "Exercicio EBAC Postan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31620255",
+		"_collection_link": "https://crimson-shadow-478396.postman.co/workspace/Ebac-estudos-teste~a2f12090-083f-45cb-a44c-fbf8ec16b5f8/collection/31620255-9489d4f0-119c-4748-a538-9357ada08903?action=share&source=collection_link&creator=31620255"
+	},
+	"item": [
+		{
+			"name": "Listar Usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code tem que ser 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}usuarios",
+					"host": [
+						"{{local}}usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar se o cadastro foi realizado\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso\");\r",
+							"});\r",
+							"pm.test(\"Status code tem que ser 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Status code tem que ser 400 se o email utilizado ja estiver cadastrado\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Mensagem de erro se o email ja estiver cadastrado\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Este email já está sendo usado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//Exemplo//\r\n\r\n{\r\n      \"nome\": \"Fulano da Silva\",\r\n      \"email\": \"beltrano@qa.com.br\",\r\n      \"password\": \"teste\",\r\n      \"administrador\": \"true\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}usuarios",
+					"host": [
+						"{{local}}usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Usuarios por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code tem que ser 200 se encontrar o usuario\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Usuario encontrado\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"nome\");\r",
+							"});\r",
+							"pm.test(\"Usuario nao encontrado\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Usuário não encontrado\");\r",
+							"});\r",
+							"pm.test(\"Status code tem que ser 400 se o usuario nao for encontrado\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}usuarios/SZlakTKKhB5XerbJ",
+					"host": [
+						"{{local}}usuarios"
+					],
+					"path": [
+						"SZlakTKKhB5XerbJ"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code tem que ser 200 se o usuario for excluido\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Exibir mensagem de sucesso ao excluir o usuario\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Registro excluído com sucesso\");\r",
+							"});\r",
+							"pm.test(\"Status code tem que ser 400 se o usuario nao puder ser excluido\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Mensagem de erro por nao poder excluir o usuario\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Usuário com carrinho cadastrado\");\r",
+							"});\r",
+							"pm.test(\"Exibir mensagem se o registro ja estiver excluido\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Nenhum registro excluído\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Colocar ID do usuario que deseja excluir.\r\nUsuario com carrinho nao pode ser excluido.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}usuarios/0uxuPY0cbmQhpEz1",
+					"host": [
+						"{{local}}usuarios"
+					],
+					"path": [
+						"0uxuPY0cbmQhpEz1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar Usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code tem que ser 200 se o registro for alterado\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Registro alterado\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Registro alterado com sucesso\");\r",
+							"});\r",
+							"pm.test(\"Status code tem que ser 400 caso nao consiga alterar o registro\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Mensagem de erro de email\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Este email já está sendo usado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Carlos God\",\r\n    \"email\": \"carlinhosgod@test.com.br\",\r\n    \"password\": \"god12\",\r\n    \"administrador\": \"true\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}usuarios/ldA9GwdHseBvIWgv",
+					"host": [
+						"{{local}}usuarios"
+					],
+					"path": [
+						"ldA9GwdHseBvIWgv"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
